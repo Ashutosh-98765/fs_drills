@@ -1,0 +1,3 @@
+/home/dell/FS_Drills/FS_CALLBACK/upper_case_file.txt
+/home/dell/FS_Drills/FS_CALLBACK/lower_case_file.txt
+/home/dell/FS_Drills/FS_CALLBACK/sorted.txt
