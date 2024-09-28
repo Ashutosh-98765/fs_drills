@@ -1,0 +1,3 @@
+/home/dell/FS_Drills/FS_Promises/upper.txt
+/home/dell/FS_Drills/FS_Promises/lower.txt
+/home/dell/FS_Drills/FS_Promises/sorted.txt
