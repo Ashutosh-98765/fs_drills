@@ -20,7 +20,7 @@ const readFile = (callback) => {
 
 const filename_path = path.join(dir_path , 'filenames.txt');
 const createFile = (callback) => {
-    fs.writeFile(filename_path , "" , (err) => {
+    fs.writeFile(filename_path , "" , (err , file_path) => {
         if(err){
             callback(err);
         }
