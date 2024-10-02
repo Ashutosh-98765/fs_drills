@@ -1,4 +1,4 @@
-const {create_directory , create_files , delete_files} = require('../problem1.js');
+const { create_directory, create_files, delete_files } = require('../problem1.js');
 
 create_directory().then(() => {
     console.log("Directory created successfully!");
@@ -6,7 +6,7 @@ create_directory().then(() => {
 })
 .then((files) => {
     console.log("Files created successfully!");
-    return delete_files(files);
+        return delete_files(files);
 })
 .then(() => {
     console.log("Files deleted successfully!");
