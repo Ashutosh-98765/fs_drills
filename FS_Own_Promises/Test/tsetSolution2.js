@@ -5,20 +5,20 @@ createFile()
     console.log("filename file created successfully");
     return read_lipsum_file();
 })
-.then((lipsum_data) => {
-    console.log(lipsum_data);
+.then(() => {
+    console.log("lipsum file read");
     return upperCase();
 })
-.then((upper_data) => {
-    console.log(upper_data);
+.then(() => {
+    console.log("Upper file created");
     return lowerCase();
 })
-.then((lower_data) => {
-    console.log(lower_data);
+.then(() => {
+    console.log("Lower file created");
     return sorted();
 })
-.then((sorted_data) => {
-    console.log(sorted_data);
+.then(() => {
+    console.log("sorted file created");
     return delete_files();
 })
 .then(() => {
@@ -26,4 +26,4 @@ createFile()
 })
 .catch((error) => {
     console.log(error);
-})
+});
