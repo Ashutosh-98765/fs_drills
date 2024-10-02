@@ -10,11 +10,11 @@ const lower_file_path = path.join(dir_path , 'lower.txt');
 const sorted_file_path = path.join(dir_path , 'sorted.txt');
 
 
-// 1. Read the given file lipsum.txt
 function createFile(){
     return fs.writeFile(file_name_path , "");
 }
 
+// 1. Read the given file lipsum.txt
 function readFile(){
     return fs.readFile(lipsum_file_path , 'utf-8')
     .then(lipsum_data => lipsum_data)
@@ -26,12 +26,10 @@ function upperCase(lipsum_data){
     const upper_data = lipsum_data.toUpperCase();
     return fs.writeFile(upper_file_path , upper_data)
     .then(() => {
-
         return fs.appendFile(file_name_path , `${upper_file_path}\n`)
-        .then(() => {
-            return upper_data;
-        })
-        .catch(err => err);
+    })
+    .then(() => {
+        return upper_data;
     })
     .catch(err => err);
 }
@@ -47,24 +45,26 @@ function lowerCase(upper_data){
     return fs.writeFile(lower_file_path , lower_data)
     .then(() => {
         return fs.appendFile(file_name_path , `${lower_file_path}\n`)
-        .then(() => {
-            return lower_data;
-        })
-        .catch(err => err);
+    })
+    .then(() => {
+        return lower_data;
     })
     .catch(err => err);
 }
 
 // 4. Read the new files, sort the content, write it out to a new file. Store the name of the new file in filenames.txt
 function sorted(lower_data){
-    const sorted_data = lower_data.split("\n").sort().join("\n").trim();
+    const sorted_data = lower_data.split("\n")
+                                    .sort()
+                                    .join("\n")
+                                    .trim();
+
     return fs.writeFile(sorted_file_path , sorted_data)
     .then(() => {
         return fs.appendFile(file_name_path , `${sorted_file_path}\n`)
-        .then(() => {
-            return sorted_data;
-        })
-        .catch(err => err);
+    })
+    .then(() => {
+        return sorted_data;
     })
     .catch(err => err);
 }
