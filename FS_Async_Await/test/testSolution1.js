@@ -11,8 +11,8 @@ async function asyncAwait() {
         await delete_files();
         console.log("Files deleted");
     }
-    catch (err) {
-        console.log(err);
+    catch (error) {
+        console.lof(error);
     }
 }
 asyncAwait();
