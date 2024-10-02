@@ -18,7 +18,9 @@ function readFile(file_path) {
             if (err) {
                 reject(err);
             }
+            else{
             resolve(file_data);
+            }
         })
     })
 }
