@@ -1,4 +1,4 @@
-const fs = require('fs/promises');
+const fs = require('fs').promises;
 const path = require('path');
 
 const directory_path = __dirname;
@@ -12,7 +12,6 @@ async function create_directory() {
         tconsole.log(error);
     }
 }
-
 
 // 2. Create random JSON files
 async function create_files(count) {
@@ -31,10 +30,7 @@ async function create_files(count) {
 async function delete_files() {
     try {
         const filenames = await fs.readdir(directory_name, 'utf-8');
-        // console.log(filenames);
         filenames.map(async (file) => {
-            // console.log(file);
-
             const file_path = path.join(directory_name, file);
             await fs.unlink(file_path);
         })
