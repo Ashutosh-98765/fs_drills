@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-
 const directory_path = __dirname;
 const directory_name = path.join(directory_path, 'randomJsonFiles');
 
@@ -31,7 +30,6 @@ function create_files(count) {
                     reject();
                 }
                 created_count++;
-
                 if (created_count === count) {
                     resolve(files);
                 }

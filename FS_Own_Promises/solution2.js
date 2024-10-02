@@ -15,8 +15,10 @@ const sorted_file_path = path.join(dir_path, 'sorted.txt');
 function readFile(file_path) {
     return new Promise((resolve, reject) => {
         fs.readFile(file_path, 'utf-8', (err, file_data) => {
-            if (err) (reject(err))
-                resolve(file_data);
+            if (err) {
+                reject(err);
+            }
+            resolve(file_data);
         })
     })
 }
@@ -25,7 +27,9 @@ function readFile(file_path) {
 function appendFile(file_name_path, file_path) {
     return new Promise((resolve, reject) => {
         fs.appendFile(file_name_path, `${file_path}\n`, (err) => {
-            if (err) (reject(err));
+            if (err) {
+                reject(err);
+            }
             resolve();
         })
     })
@@ -48,8 +52,8 @@ function createFile() {
 function read_lipsum_file() {
     return new Promise((resolve, reject) => {
         readFile(lipsum_file_path)
-            .then((lipsum_data) => {
-                resolve(lipsum_data);
+            .then(() => {
+                resolve();
             })
             .catch((err) => {
                 reject(err);
@@ -63,14 +67,24 @@ function upperCase() {
         readFile(lipsum_file_path)
             .then((lipsum_data) => {
                 const upper_data = lipsum_data.toUpperCase();
-                fs.writeFile(upper_file_path, upper_data, (err) => {
-                    if (err) (reject(err));
-                    appendFile(file_name_path, upper_file_path)
-                        .then(resolve(upper_data))
-                        .catch(err);
+                return new Promise((resolve, reject) => {
+                    fs.writeFile(upper_file_path, upper_data, (err) => {
+                        if (err) {
+                            reject(err);
+                        }
+                        else {
+                            resolve();
+                        }
+                    })
                 })
             })
-            .catch((err) => {
+            .then(() => {
+                appendFile(file_name_path, upper_file_path)
+            })
+            .then(() => {
+                resolve();
+            })
+            .catch(err => {
                 reject(err);
             })
     })
@@ -78,23 +92,31 @@ function upperCase() {
 
 // 3. Read the new file and convert it to lower case. Then split the contents into sentences. Then write it to a new file. Store the name of the new file in filenames.txt
 function lowerCase() {
-
     return new Promise((resolve, reject) => {
-
         readFile(upper_file_path)
             .then((upper_data) => {
                 const lower_data = upper_data.toLowerCase()
-                    .split(".")
-                    .map((line) => line.trim())
-                    .join("\n")
-                    .trim();
+                                   .split(".")
+                                   .map((line) => line.trim())
+                                   .join("\n")
+                                   .trim();
 
-                fs.writeFile(lower_file_path, lower_data, (err) => {
-                    if (err) (reject(err));
-                    appendFile(file_name_path, lower_file_path)
-                        .then(resolve(lower_data))
-                        .catch(err);
-                })
+                return new Promise((resolve, reject) => {
+                    fs.writeFile(lower_file_path, lower_data, (err) => {
+                        if (err) {
+                            (reject(err));
+                        }
+                        else {
+                            resolve();
+                        }
+                    });
+                });
+            })
+            .then(() => {
+                return appendFile(file_name_path, lower_file_path)
+            })
+            .then(() => {
+                resolve();
             })
             .catch((err) => {
                 reject(err);
@@ -108,16 +130,26 @@ function sorted() {
         readFile(lower_file_path)
             .then((lower_data) => {
                 const sorted_data = lower_data.split("\n")
-                    .sort()
-                    .join("\n")
-                    .trim();
+                                    .sort()
+                                    .join("\n")
+                                    .trim();
 
-                fs.writeFile(sorted_file_path, sorted_data, (err) => {
-                    if (err) (reject(err));
-                    appendFile(file_name_path, sorted_file_path)
-                        .then(resolve(sorted_data))
-                        .catch(err);
-                })
+                return new Promise((resolve, reject) => {
+                    fs.writeFile(sorted_file_path, sorted_data, (err) => {
+                        if (err) {
+                            (reject(err))
+                        }
+                        else {
+                            resolve();
+                        }
+                    });
+                });
+            })
+            .then(() => {
+                return appendFile(file_name_path, sorted_file_path)
+            })
+            .then(() => {
+                resolve();
             })
             .catch((err) => {
                 reject(err);
@@ -131,12 +163,14 @@ function delete_files() {
         readFile(file_name_path)
             .then((filenames) => {
                 const files = filenames.split("\n").filter(Boolean);
-                let count = 0;
+                let deleted_count = 0;
                 files.forEach(file => {
                     fs.unlink(file, (err) => {
-                        if (err) (reject(err))
-                        count++;
-                        if (count == files.length) {
+                        if (err) {
+                            reject(err)
+                        };
+                        deleted_count++;
+                        if (deleted_count == files.length) {
                             resolve();
                         }
                     })
